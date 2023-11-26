@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 // connect DB
-import * as configDB from "./config/database";
+import * as configDB from "./api/v1/config/database";
 import mainV1Routes from "./api/v1/routes/index.route";
 
 import dotenv from "dotenv";
