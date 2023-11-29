@@ -1,3 +1,4 @@
+import { paginationHelper } from "../../../helpers/pagination";
 import Task from "../../../models/task.model";
 import { Request, Response } from "express";
 
@@ -27,14 +28,34 @@ export const index = async (req: Request, res: Response): Promise<void> => {
   if (req.query.sortKey && req.query.sortValue) {
     const sortKey = req.query.sortKey.toString();
     sort[sortKey] = req.query.sortValue;
-
     // sort.sortKey thì ko đc
   }
 
   // END SORT
 
-  const tasks = await Task.find(find).sort();
-  res.json(tasks);
+  // PAGINATION
+  const totalTasks = await Task.countDocuments(find);
+
+  const paginationObj = paginationHelper(
+    {
+      currentPage: 1,
+      limitItems: 5,
+    },
+    req.query,
+    totalTasks
+  );
+
+  // END PAGINATION
+
+  const tasks = await Task.find(find)
+    .sort()
+    .limit(paginationObj.limitItems)
+    .skip(paginationObj.skip);
+
+  res.json({
+    total: totalTasks,
+    data: tasks,
+  });
 };
 
 export const detail = async (req: Request, res: Response): Promise<void> => {
