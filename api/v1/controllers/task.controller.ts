@@ -2,6 +2,7 @@ import Task from "../../../models/task.model";
 import { Request, Response } from "express";
 
 export const index = async (req: Request, res: Response): Promise<void> => {
+  // FIND
   interface Find {
     deleted: boolean;
     status?: string;
@@ -16,7 +17,23 @@ export const index = async (req: Request, res: Response): Promise<void> => {
     find.status = req.query.status.toString();
   }
 
-  const tasks = await Task.find(find);
+  // END FIND
+
+  // SORT
+  const sort = {};
+  // có thể định nghĩa interface để giới hạn các trường
+  // có thể đc sort
+
+  if (req.query.sortKey && req.query.sortValue) {
+    const sortKey = req.query.sortKey.toString();
+    sort[sortKey] = req.query.sortValue;
+
+    // sort.sortKey thì ko đc
+  }
+
+  // END SORT
+
+  const tasks = await Task.find(find).sort();
   res.json(tasks);
 };
 
