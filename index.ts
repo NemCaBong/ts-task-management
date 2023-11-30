@@ -5,6 +5,8 @@ import mainV1Routes from "./api/v1/routes/index.route";
 
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cors from "cors";
+
 dotenv.config();
 
 configDB.connect();
@@ -18,6 +20,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+
+// CORS
+// const corsOptions = {
+//   origin: "http://example.com",
+// };
+app.use(cors());
 
 mainV1Routes(app);
 
