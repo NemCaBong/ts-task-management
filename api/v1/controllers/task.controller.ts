@@ -211,12 +211,12 @@ export const deleteTask = async (req: Request, res: Response) => {
     );
     res.json({
       code: 200,
-      message: "Xóa sản phẩm thành công",
+      message: "Xóa task thành công",
     });
   } catch (error) {
     res.json({
       code: 400,
-      message: "Xóa sản phẩm thất bại " + error.message,
+      message: "Xóa tasks thất bại " + error.message,
     });
   }
 };
