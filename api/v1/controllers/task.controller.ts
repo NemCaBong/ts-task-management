@@ -3,7 +3,7 @@ import { searchHelper } from "../../../helpers/search";
 import Task from "../../../models/task.model";
 import { Request, Response } from "express";
 
-export const index = async (req: Request, res: Response): Promise<void> => {
+export const index = async (req: Request, res: Response) => {
   try {
     interface Find {
       deleted: boolean;
@@ -72,7 +72,7 @@ export const index = async (req: Request, res: Response): Promise<void> => {
   // FIND
 };
 
-export const detail = async (req: Request, res: Response): Promise<void> => {
+export const detail = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
 
@@ -85,6 +85,24 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
     res.json({
       code: 400,
       error: error.message,
+    });
+  }
+};
+
+export const changeStatus = async (req: Request, res: Response) => {
+  try {
+    type StatusType = "initial" | "doing" | "finish" | "notFinish" | "pending";
+
+    const id: string = req.params.id;
+    const status: StatusType = req.body.status;
+
+    await Task.updateOne({ _id: id }, { status: status });
+
+    res.json({ code: 200, message: "Cập nhật trạng thái thành công!" });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Cập nhật trạng thái không thành công! " + error.message,
     });
   }
 };
