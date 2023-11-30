@@ -3,6 +3,7 @@ import { searchHelper } from "../../../helpers/search";
 import Task from "../../../models/task.model";
 import { Request, Response } from "express";
 
+// [GET] /api/v1/tasks
 export const index = async (req: Request, res: Response) => {
   try {
     interface Find {
@@ -72,6 +73,7 @@ export const index = async (req: Request, res: Response) => {
   // FIND
 };
 
+// [GET] /api/v1/tasks/detail/:id
 export const detail = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
@@ -89,6 +91,7 @@ export const detail = async (req: Request, res: Response) => {
   }
 };
 
+// [PATCH] /api/v1/tasks/change-status/:id
 export const changeStatus = async (req: Request, res: Response) => {
   try {
     type StatusType = "initial" | "doing" | "finish" | "notFinish" | "pending";
@@ -106,7 +109,7 @@ export const changeStatus = async (req: Request, res: Response) => {
     });
   }
 };
-
+// [PATCH] /api/v1/tasks/change-multi
 export const changeMulti = async (req: Request, res: Response) => {
   try {
     const ids: string[] = req.body.ids;
@@ -154,6 +157,24 @@ export const changeMulti = async (req: Request, res: Response) => {
     res.json({
       code: 400,
       message: "Cập nhật nhiều trạng thái không thành công! " + error.message,
+    });
+  }
+};
+
+// [POST] /api/v1/tasks/create
+export const create = async (req: Request, res: Response) => {
+  try {
+    const task = new Task(req.body);
+    const data = await task.save();
+    res.json({
+      code: 200,
+      message: "Tạo sản phẩm mới thành công",
+      data: data,
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Tạo tasks lỗi " + error.message,
     });
   }
 };
