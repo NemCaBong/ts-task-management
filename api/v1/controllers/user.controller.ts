@@ -85,3 +85,12 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 };
+
+// [GET] /api/v1/users/detail
+export const detail = async (req: Request, res: Response) => {
+  res.json({
+    code: 200,
+    message: "Lấy thông tin user thành công",
+    info: req["user"],
+  });
+};
