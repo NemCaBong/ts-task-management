@@ -20,4 +20,7 @@ router.post("/create", controller.create);
 // [PATCH] /api/v1/tasks/edit/:id
 router.patch("/edit/:id", controller.edit);
 
+// [DELETE] /api/v1/tasks/edit/:id
+router.delete("/delete/:id", controller.deleteTask);
+
 export const tasksRoute: Router = router;

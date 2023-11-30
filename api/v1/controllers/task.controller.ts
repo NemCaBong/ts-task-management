@@ -178,6 +178,7 @@ export const create = async (req: Request, res: Response) => {
     });
   }
 };
+// [PATCH] /api/v1/tasks/edit/:id
 export const edit = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
@@ -190,6 +191,32 @@ export const edit = async (req: Request, res: Response) => {
     res.json({
       code: 400,
       message: "Chỉnh sửa thất bại " + error.message,
+    });
+  }
+};
+
+// [DELETE] /api/v1/tasks/delete/:id
+export const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+
+    await Task.updateOne(
+      {
+        _id: id,
+      },
+      {
+        deleted: true,
+        deletedAt: new Date(),
+      }
+    );
+    res.json({
+      code: 200,
+      message: "Xóa sản phẩm thành công",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Xóa sản phẩm thất bại " + error.message,
     });
   }
 };
