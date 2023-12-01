@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "js", // biên dịch code ts vào folder js
+    "outDir": "dist", // biên dịch code ts vào dist
     "target": "ES6", // cho phép biên dịch ES6
     "module": "CommonJS", // commonJs là tiêu chuẩn đc sử dung
     // trong nodejs để làm việc với module
