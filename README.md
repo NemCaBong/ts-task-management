@@ -1,5 +1,5 @@
 # Task management
-
+A simple task management API using TypeScript, NodeJS, ExpressJS. 
 ## Task route
 - /api/v1/tasks: get all tasks
 
